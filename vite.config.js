@@ -3,9 +3,8 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  // GitHub Actions sets VITE_BASE_URL to "/<repo-name>/" automatically.
-  // Falls back to "/" for local dev or a custom domain.
-  base: process.env.VITE_BASE_URL ?? "/",
+  // Relative base so assets load correctly on GitHub Pages regardless of repo name
+  base: "./",
   server: {
     proxy: {
       "/anthropic": {
