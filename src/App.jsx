@@ -244,19 +244,9 @@ export default function App() {
 
   async function connect() {
     if (!anthropicKey) { setAuthError("Anthropic API key is required."); return; }
-    setConnecting(true);
-    setAuthError("");
-    try {
-      // Validate key with a minimal test call
-      await claudePost(anthropicKey, { system: "Reply: OK", userContent: "ping", maxTokens: 5 });
-      localStorage.setItem("nexus-anthropic-key", anthropicKey);
-    } catch (e) {
-      setAuthError(`Invalid key: ${e.message}`);
-      setConnecting(false);
-      return;
-    }
+    if (!anthropicKey.startsWith("sk-ant-")) { setAuthError("Key should start with sk-ant-"); return; }
+    localStorage.setItem("nexus-anthropic-key", anthropicKey);
     setConnected(true);
-    setConnecting(false);
     // Fetch prices in background after connecting
     refreshPrices();
     // Fetch technicals in background (7 separate OHLCV calls, takes ~3-5s)
