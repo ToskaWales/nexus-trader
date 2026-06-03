@@ -24,6 +24,7 @@ jobs:
         run: node bot/index.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FINNHUB_KEY:       ${{ secrets.FINNHUB_KEY }}
 
       - name: Commit portfolio changes
         run: |
