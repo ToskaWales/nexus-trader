@@ -8,6 +8,7 @@ import fs from "fs";
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
 
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_API_KEY;
+const FINNHUB_KEY    = process.env.FINNHUB_KEY;
 const MODEL          = "claude-sonnet-4-6";
 const PORTFOLIO_FILE = "portfolio.json";
 const NOW_ISO        = new Date().toISOString();
@@ -68,43 +69,66 @@ function savePortfolio(p) {
   log("portfolio.json saved.");
 }
 
-// ── YAHOO FINANCE ─────────────────────────────────────────────────────────────
+// ── MARKET DATA ───────────────────────────────────────────────────────────────
+// Finnhub.io — free stock data (60 calls/min), requires FINNHUB_KEY secret
+// CoinGecko  — free crypto data, no API key needed
 
-const YAHOO_HEADERS = {
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-  "Accept": "application/json",
-};
+const COINGECKO_IDS = { "BTC/USD": "bitcoin", "ETH/USD": "ethereum" };
+
+async function fetchStockQuote(symbol) {
+  if (!FINNHUB_KEY) return null;
+  const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_KEY}`);
+  if (!res.ok) return null;
+  const d = await res.json();
+  if (!d.c) return null;
+  return { price: d.c, change: +d.dp.toFixed(2) };
+}
+
+async function fetchStockCloses(symbol) {
+  if (!FINNHUB_KEY) return null;
+  const to   = Math.floor(Date.now() / 1000);
+  const from = to - 120 * 24 * 60 * 60;
+  const res  = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${from}&to=${to}&token=${FINNHUB_KEY}`);
+  if (!res.ok) return null;
+  const d = await res.json();
+  return d.s === "ok" ? d.c : null;
+}
+
+async function fetchCryptoQuote(symbol) {
+  const id  = COINGECKO_IDS[symbol];
+  if (!id) return null;
+  const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd&include_24hr_change=true`);
+  if (!res.ok) return null;
+  const data = await res.json();
+  const price = data[id]?.usd;
+  if (!price) return null;
+  return { price, change: +(data[id].usd_24h_change ?? 0).toFixed(2) };
+}
+
+async function fetchCryptoCloses(symbol) {
+  const id  = COINGECKO_IDS[symbol];
+  if (!id) return null;
+  const res = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=90&interval=daily`);
+  if (!res.ok) return null;
+  const data = await res.json();
+  return (data.prices ?? []).map(([, p]) => p);
+}
 
 async function fetchPrices(symbols) {
-  // Try both Yahoo Finance endpoints — query1 and query2 — in case one is blocked
-  for (const host of ["query1", "query2"]) {
+  const out = {};
+  await Promise.all(symbols.map(async sym => {
     try {
-      const syms = symbols.map(toYahoo).join(",");
-      const res  = await fetch(`https://${host}.finance.yahoo.com/v7/finance/quote?symbols=${syms}`, { headers: YAHOO_HEADERS });
-      if (!res.ok) continue;
-      const data = await res.json();
-      const out  = {};
-      for (const q of data.quoteResponse?.result ?? []) {
-        const sym = symbols.find(s => toYahoo(s) === q.symbol) ?? q.symbol;
-        if (q.regularMarketPrice) out[sym] = { price: q.regularMarketPrice, change: +(q.regularMarketChangePercent ?? 0).toFixed(2) };
-      }
-      if (Object.keys(out).length > 0) return out;
-    } catch (e) { log(`fetchPrices ${host} error:`, e.message); }
-  }
-  return {};
+      const q = sym.includes("/") ? await fetchCryptoQuote(sym) : await fetchStockQuote(sym);
+      if (q) out[sym] = q;
+    } catch (e) { log(`fetchPrices ${sym}:`, e.message); }
+  }));
+  return out;
 }
 
 async function fetchCloses(symbol) {
-  for (const host of ["query1", "query2"]) {
-    try {
-      const res  = await fetch(`https://${host}.finance.yahoo.com/v8/finance/chart/${toYahoo(symbol)}?interval=1d&range=3mo`, { headers: YAHOO_HEADERS });
-      if (!res.ok) continue;
-      const data   = await res.json();
-      const closes = (data.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? []).filter(c => c != null);
-      if (closes.length > 0) return closes;
-    } catch { /* try next host */ }
-  }
-  return null;
+  try {
+    return symbol.includes("/") ? await fetchCryptoCloses(symbol) : await fetchStockCloses(symbol);
+  } catch (e) { log(`fetchCloses ${symbol}:`, e.message); return null; }
 }
 
 // ── TECHNICALS ────────────────────────────────────────────────────────────────
@@ -193,6 +217,7 @@ async function main() {
   log("=== Nexus Trader Bot starting ===");
 
   if (!ANTHROPIC_KEY) { log("ERROR: ANTHROPIC_API_KEY secret not set"); process.exit(1); }
+  if (!FINNHUB_KEY)   { log("ERROR: FINNHUB_KEY secret not set"); process.exit(1); }
 
   const portfolio = loadPortfolio();
   portfolio.cooldowns = portfolio.cooldowns ?? {};
