@@ -1,5 +1,5 @@
 {
-  "cash": 99569.6,
+  "cash": 34343.600000000006,
   "positions": [
     {
       "symbol": "NVDA",
@@ -8,9 +8,30 @@
       "tier": "medium",
       "instrumentType": "Equity",
       "openedAt": 1780516599134
+    },
+    {
+      "symbol": "BTC/USD",
+      "qty": 1,
+      "avgEntry": 65226,
+      "tier": "medium",
+      "instrumentType": "Cryptocurrency",
+      "openedAt": 1780519428696
     }
   ],
   "orders": [
+    {
+      "id": "mpyjanvc",
+      "symbol": "BTC/USD",
+      "side": "buy",
+      "qty": "1",
+      "filled_avg_price": "65226.00",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI of 13 indicates extreme oversold conditions providing a high-probability mean reversion entry, with 69% consensus and position sized conservatively at ~$457 well within the $500 limit.",
+      "created_at": "2026-06-03T20:43:48.693Z"
+    },
     {
       "id": "mpyhm0ke",
       "symbol": "NVDA",
@@ -26,8 +47,8 @@
     }
   ],
   "cooldowns": {
-    "NVDA": 1780516599134
+    "BTC/USD": 1780519428696
   },
-  "lastRun": "2026-06-03T19:56:39.130Z",
+  "lastRun": "2026-06-03T20:43:48.693Z",
   "haltReason": null
 }
