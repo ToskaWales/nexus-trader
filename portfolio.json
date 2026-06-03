@@ -1,0 +1,8 @@
+{
+  "cash": 100000,
+  "positions": [],
+  "orders": [],
+  "cooldowns": {},
+  "lastRun": null,
+  "haltReason": null
+}

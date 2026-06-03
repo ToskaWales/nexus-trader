@@ -1,0 +1,35 @@
+name: Trading Bot
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # every 30 minutes, 24/7
+  workflow_dispatch:           # allow manual trigger from Actions tab
+
+permissions:
+  contents: write              # needed to commit portfolio.json back to the repo
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run trading bot
+        run: node bot/index.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit portfolio changes
+        run: |
+          git config user.name  "Nexus Trader Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add portfolio.json
+          git diff --staged --quiet || (
+            git commit -m "Bot: $(date -u '+%Y-%m-%d %H:%M UTC')" && git push
+          )
