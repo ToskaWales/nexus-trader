@@ -70,28 +70,41 @@ function savePortfolio(p) {
 
 // ── YAHOO FINANCE ─────────────────────────────────────────────────────────────
 
+const YAHOO_HEADERS = {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "Accept": "application/json",
+};
+
 async function fetchPrices(symbols) {
-  try {
-    const syms = symbols.map(toYahoo).join(",");
-    const res  = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${syms}`);
-    if (!res.ok) return {};
-    const data = await res.json();
-    const out  = {};
-    for (const q of data.quoteResponse?.result ?? []) {
-      const sym = symbols.find(s => toYahoo(s) === q.symbol) ?? q.symbol;
-      out[sym] = { price: q.regularMarketPrice ?? 0, change: +(q.regularMarketChangePercent ?? 0).toFixed(2) };
-    }
-    return out;
-  } catch (e) { log("fetchPrices error:", e.message); return {}; }
+  // Try both Yahoo Finance endpoints — query1 and query2 — in case one is blocked
+  for (const host of ["query1", "query2"]) {
+    try {
+      const syms = symbols.map(toYahoo).join(",");
+      const res  = await fetch(`https://${host}.finance.yahoo.com/v7/finance/quote?symbols=${syms}`, { headers: YAHOO_HEADERS });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const out  = {};
+      for (const q of data.quoteResponse?.result ?? []) {
+        const sym = symbols.find(s => toYahoo(s) === q.symbol) ?? q.symbol;
+        if (q.regularMarketPrice) out[sym] = { price: q.regularMarketPrice, change: +(q.regularMarketChangePercent ?? 0).toFixed(2) };
+      }
+      if (Object.keys(out).length > 0) return out;
+    } catch (e) { log(`fetchPrices ${host} error:`, e.message); }
+  }
+  return {};
 }
 
 async function fetchCloses(symbol) {
-  try {
-    const res  = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${toYahoo(symbol)}?interval=1d&range=3mo`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    return (data.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? []).filter(c => c != null);
-  } catch { return null; }
+  for (const host of ["query1", "query2"]) {
+    try {
+      const res  = await fetch(`https://${host}.finance.yahoo.com/v8/finance/chart/${toYahoo(symbol)}?interval=1d&range=3mo`, { headers: YAHOO_HEADERS });
+      if (!res.ok) continue;
+      const data   = await res.json();
+      const closes = (data.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? []).filter(c => c != null);
+      if (closes.length > 0) return closes;
+    } catch { /* try next host */ }
+  }
+  return null;
 }
 
 // ── TECHNICALS ────────────────────────────────────────────────────────────────
@@ -194,6 +207,11 @@ async function main() {
   // Fetch live prices
   const prices = await fetchPrices(WATCHLIST.map(w => w.symbol));
   log(`Prices loaded: ${Object.keys(prices).length}/${WATCHLIST.length} symbols`);
+  if (Object.keys(prices).length < 3) {
+    log("ERROR: Too few prices returned — skipping cycle to avoid bad trades.");
+    savePortfolio({ ...portfolio, lastRun: NOW_ISO });
+    return;
+  }
 
   // Portfolio metrics
   const totalPosValue = portfolio.positions.reduce((s, p) => s + p.qty * (prices[p.symbol]?.price ?? p.avgEntry), 0);
