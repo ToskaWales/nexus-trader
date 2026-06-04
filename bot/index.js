@@ -15,28 +15,46 @@ const NOW_ISO        = new Date().toISOString();
 
 const WATCHLIST = [
   { symbol: "AAPL",    market: "Stocks", volatility: "Low"    },
-  { symbol: "NVDA",    market: "Stocks", volatility: "Medium" },
-  { symbol: "TSLA",    market: "Stocks", volatility: "High"   },
   { symbol: "MSFT",    market: "Stocks", volatility: "Low"    },
+  { symbol: "GOOGL",   market: "Stocks", volatility: "Low"    },
+  { symbol: "META",    market: "Stocks", volatility: "Medium" },
   { symbol: "AMZN",    market: "Stocks", volatility: "Medium" },
+  { symbol: "NVDA",    market: "Stocks", volatility: "Medium" },
+  { symbol: "AMD",     market: "Stocks", volatility: "High"   },
+  { symbol: "TSLA",    market: "Stocks", volatility: "High"   },
+  { symbol: "NFLX",    market: "Stocks", volatility: "High"   },
+  { symbol: "JPM",     market: "Stocks", volatility: "Low"    },
+  { symbol: "LLY",     market: "Stocks", volatility: "Medium" },
+  { symbol: "SPY",     market: "Stocks", volatility: "Low"    },
   { symbol: "BTC/USD", market: "Crypto", volatility: "High"   },
   { symbol: "ETH/USD", market: "Crypto", volatility: "High"   },
+  { symbol: "SOL/USD", market: "Crypto", volatility: "High"   },
 ];
 
 const RISK_TIERS = {
-  low:    { sl: 0.02, tp: 0.05, maxOpen: 3, minConsensus: 75 },
-  medium: { sl: 0.04, tp: 0.12, maxOpen: 2, minConsensus: 60 },
-  high:   { sl: 0.07, tp: 0.25, maxOpen: 1, minConsensus: 45 },
+  low:    { sl: 0.02, tp: 0.05, maxOpen: 4, minConsensus: 75 },
+  medium: { sl: 0.04, tp: 0.12, maxOpen: 3, minConsensus: 60 },
+  high:   { sl: 0.07, tp: 0.25, maxOpen: 2, minConsensus: 45 },
 };
 
 const CORRELATED_GROUPS = [
-  ["BTC/USD", "ETH/USD"],
-  ["AAPL", "MSFT"],
+  ["BTC/USD", "ETH/USD", "SOL/USD"],
+  ["AAPL", "MSFT", "GOOGL"],
+  ["META", "GOOGL"],
+  ["NVDA", "AMD"],
   ["NVDA", "AMZN"],
 ];
 
-const MOCK_NEWS   = { AAPL: 65, NVDA: 88, TSLA: 25, MSFT: 70, AMZN: 72, "BTC/USD": 82, "ETH/USD": 68 };
-const MOCK_SOCIAL = { AAPL: 61, NVDA: 91, TSLA: 32, MSFT: 66, AMZN: 74, "BTC/USD": 84, "ETH/USD": 67 };
+const MOCK_NEWS = {
+  AAPL: 65, MSFT: 70, GOOGL: 72, META: 75, AMZN: 72,
+  NVDA: 88, AMD: 65, TSLA: 25, NFLX: 68, JPM: 60,
+  LLY: 80, SPY: 65, "BTC/USD": 82, "ETH/USD": 68, "SOL/USD": 74,
+};
+const MOCK_SOCIAL = {
+  AAPL: 61, MSFT: 66, GOOGL: 70, META: 78, AMZN: 74,
+  NVDA: 91, AMD: 68, TSLA: 32, NFLX: 72, JPM: 55,
+  LLY: 75, SPY: 60, "BTC/USD": 84, "ETH/USD": 67, "SOL/USD": 80,
+};
 
 const DAILY_LOSS_LIMIT = 0.05;
 const COOLDOWN_MS      = 15 * 60 * 1000;
@@ -73,7 +91,7 @@ function savePortfolio(p) {
 // Finnhub.io — free stock data (60 calls/min), requires FINNHUB_KEY secret
 // CoinGecko  — free crypto data, no API key needed
 
-const COINGECKO_IDS = { "BTC/USD": "bitcoin", "ETH/USD": "ethereum" };
+const COINGECKO_IDS = { "BTC/USD": "bitcoin", "ETH/USD": "ethereum", "SOL/USD": "solana" };
 
 async function fetchStockQuote(symbol) {
   if (!FINNHUB_KEY) return null;
