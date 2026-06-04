@@ -381,15 +381,22 @@ async function main() {
 
   // ── 6. Kelly position sizing ──────────────────────────────────────────────
 
-  const price     = prices[decision.symbol]?.price ?? 100;
-  const sig       = candidates.find(c => c.symbol === decision.symbol) ?? candidates[0];
-  const tier      = sig?.tier ?? "medium";
-  const tierCfg   = RISK_TIERS[tier];
-  const b         = 0.06 / 0.04;
-  const kelly     = Math.max(0, (b * 0.5 - 0.5) / b);
-  const kellyCap  = Math.max(10, Math.min(equity * kelly * 0.5, equity * 0.15));
-  const maxShares = Math.max(1, Math.floor(Math.min(kellyCap, 500) / price));
-  const safeQty   = Math.max(1, Math.min(parseFloat(decision.qty) || 1, maxShares));
+  const price    = prices[decision.symbol]?.price ?? 100;
+  const sig      = candidates.find(c => c.symbol === decision.symbol) ?? candidates[0];
+  const tier     = sig?.tier ?? "medium";
+  const tierCfg  = RISK_TIERS[tier];
+  const b        = 0.06 / 0.04;
+  const kelly    = Math.max(0, (b * 0.5 - 0.5) / b);
+  const kellyCap = Math.max(10, Math.min(equity * kelly * 0.5, equity * 0.15));
+
+  // Hard cap at $500 per trade regardless of Kelly.
+  // Scale Claude's qty down proportionally if it exceeds the budget —
+  // this handles expensive assets (BTC $97k, NFLX $1200+) without forcing 1 full unit.
+  const maxBudget  = Math.min(kellyCap, 500);
+  const claudeQty  = parseFloat(decision.qty) || 1;
+  const safeQty    = claudeQty * price <= maxBudget
+    ? claudeQty
+    : +(maxBudget / price).toFixed(price >= 1000 ? 6 : price >= 100 ? 4 : 2);
 
   // ── 7. Execute trade ──────────────────────────────────────────────────────
 
