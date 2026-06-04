@@ -1,10 +1,10 @@
 {
-  "cash": 97677.51,
+  "cash": 97195.90999999999,
   "positions": [
     {
       "symbol": "SOL/USD",
-      "qty": 21,
-      "avgEntry": 69.03,
+      "qty": 28,
+      "avgEntry": 68.9725,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1780558585835
@@ -19,6 +19,19 @@
     }
   ],
   "orders": [
+    {
+      "id": "mpzy6vmb",
+      "symbol": "SOL/USD",
+      "side": "buy",
+      "qty": "7",
+      "filled_avg_price": "68.80",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI of 9 is extremely oversold, indicating a high-probability mean reversion bounce opportunity despite bearish MACD, with 66% consensus supporting the buy signal.",
+      "created_at": "2026-06-04T20:28:32.527Z"
+    },
     {
       "id": "mpzt2rtd",
       "symbol": "NVDA",
@@ -86,8 +99,8 @@
     }
   ],
   "cooldowns": {
-    "NVDA": 1780596322897
+    "SOL/USD": 1780604912531
   },
-  "lastRun": "2026-06-04T18:05:22.894Z",
+  "lastRun": "2026-06-04T20:28:32.527Z",
   "haltReason": null
 }
