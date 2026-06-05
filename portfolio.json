@@ -1,10 +1,10 @@
 {
-  "cash": 95299.11999999998,
+  "cash": 94834.52999999998,
   "positions": [
     {
       "symbol": "SOL/USD",
-      "qty": 56,
-      "avgEntry": 68.35749999999999,
+      "qty": 63,
+      "avgEntry": 68.13666666666666,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1780558585835
@@ -19,6 +19,19 @@
     }
   ],
   "orders": [
+    {
+      "id": "mq0s7g4b",
+      "symbol": "SOL/USD",
+      "side": "buy",
+      "qty": "7",
+      "filled_avg_price": "66.37",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI of 9 is extremely oversold territory signaling a high-probability mean reversion bounce, and 66% bullish consensus supports entry at $66.37 within the $500 limit.",
+      "created_at": "2026-06-05T10:28:47.575Z"
+    },
     {
       "id": "mq0ixsep",
       "symbol": "SOL/USD",
@@ -151,8 +164,8 @@
     }
   ],
   "cooldowns": {
-    "SOL/USD": 1780639760401
+    "SOL/USD": 1780655327579
   },
-  "lastRun": "2026-06-05T06:09:20.397Z",
+  "lastRun": "2026-06-05T10:28:47.575Z",
   "haltReason": null
 }
