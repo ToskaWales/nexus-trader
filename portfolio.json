@@ -1,14 +1,6 @@
 {
-  "cash": 94406.72999999998,
+  "cash": 98502.35999999999,
   "positions": [
-    {
-      "symbol": "SOL/USD",
-      "qty": 63,
-      "avgEntry": 68.13666666666666,
-      "tier": "medium",
-      "instrumentType": "Cryptocurrency",
-      "openedAt": 1780558585835
-    },
     {
       "symbol": "NVDA",
       "qty": 6,
@@ -19,6 +11,19 @@
     }
   ],
   "orders": [
+    {
+      "id": "mq14vv9t",
+      "symbol": "SOL/USD",
+      "side": "sell",
+      "qty": "63",
+      "filled_avg_price": "65.01",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "reason": "stop_loss",
+      "pnl": "-196.98",
+      "created_at": "2026-06-05T16:23:42.350Z"
+    },
     {
       "id": "mq0ysv51",
       "symbol": "NVDA",
@@ -176,9 +181,7 @@
       "created_at": "2026-06-04T07:36:25.832Z"
     }
   ],
-  "cooldowns": {
-    "NVDA": 1780666404517
-  },
-  "lastRun": "2026-06-05T13:33:24.513Z",
+  "cooldowns": {},
+  "lastRun": "2026-06-05T16:23:42.350Z",
   "haltReason": null
 }
