@@ -1,16 +1,42 @@
 {
-  "cash": 98502.35999999999,
+  "cash": 99328.35999999999,
   "positions": [
     {
       "symbol": "NVDA",
-      "qty": 6,
-      "avgEntry": 216.77666666666667,
+      "qty": 2,
+      "avgEntry": 206.5,
       "tier": "medium",
       "instrumentType": "Equity",
-      "openedAt": 1780588332548
+      "openedAt": 1780683495541
     }
   ],
   "orders": [
+    {
+      "id": "mq18z6np",
+      "symbol": "NVDA",
+      "side": "buy",
+      "qty": "2",
+      "filled_avg_price": "206.50",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "NVDA has the highest consensus at 70% with no contradictory technical signals (undefined RSI/MACD avoids the extremely oversold but bearish MACD conflict seen in crypto candidates), and 2 shares at $206.50 = $413 stays within the $500 limit.",
+      "created_at": "2026-06-05T18:18:15.538Z"
+    },
+    {
+      "id": "mq18z6np",
+      "symbol": "NVDA",
+      "side": "sell",
+      "qty": "6",
+      "filled_avg_price": "206.50",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "reason": "stop_loss",
+      "pnl": "-61.66",
+      "created_at": "2026-06-05T18:18:15.538Z"
+    },
     {
       "id": "mq14vv9t",
       "symbol": "SOL/USD",
@@ -181,7 +207,9 @@
       "created_at": "2026-06-04T07:36:25.832Z"
     }
   ],
-  "cooldowns": {},
-  "lastRun": "2026-06-05T16:23:42.350Z",
+  "cooldowns": {
+    "NVDA": 1780683495541
+  },
+  "lastRun": "2026-06-05T18:18:15.538Z",
   "haltReason": null
 }
