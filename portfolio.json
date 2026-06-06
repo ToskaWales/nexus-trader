@@ -1,5 +1,5 @@
 {
-  "cash": 95705.41999999998,
+  "cash": 95267.98999999999,
   "positions": [
     {
       "symbol": "NVDA",
@@ -11,14 +11,27 @@
     },
     {
       "symbol": "SOL/USD",
-      "qty": 57,
-      "avgEntry": 63.560350877192974,
+      "qty": 64,
+      "avgEntry": 63.44328124999999,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1780690781715
     }
   ],
   "orders": [
+    {
+      "id": "mq2cmj0r",
+      "symbol": "SOL/USD",
+      "side": "buy",
+      "qty": "7",
+      "filled_avg_price": "62.49",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI of 3 is extremely oversold—a rare statistical extreme suggesting a high-probability mean reversion bounce, justifying a modest buy despite bearish MACD.",
+      "created_at": "2026-06-06T12:48:09.671Z"
+    },
     {
       "id": "mq28ths3",
       "symbol": "SOL/USD",
@@ -320,8 +333,8 @@
     }
   ],
   "cooldowns": {
-    "SOL/USD": 1780743696195
+    "SOL/USD": 1780750089675
   },
-  "lastRun": "2026-06-06T11:01:36.191Z",
+  "lastRun": "2026-06-06T12:48:09.671Z",
   "haltReason": null
 }
