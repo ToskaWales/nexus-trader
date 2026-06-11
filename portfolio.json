@@ -1,5 +1,5 @@
 {
-  "cash": 72147.18,
+  "cash": 71689.31,
   "positions": [
     {
       "symbol": "NVDA",
@@ -11,14 +11,27 @@
     },
     {
       "symbol": "SOL/USD",
-      "qty": 422,
-      "avgEntry": 64.41037914691945,
+      "qty": 429,
+      "avgEntry": 64.42668997668999,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1780690781715
     }
   ],
   "orders": [
+    {
+      "id": "mq9mk7id",
+      "symbol": "SOL/USD",
+      "side": "buy",
+      "qty": "7",
+      "filled_avg_price": "65.41",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "SOL shows RSI of 24 indicating deeply oversold conditions, providing a strong mean-reversion opportunity at $65.41 with a ~$458 position size within budget constraints.",
+      "created_at": "2026-06-11T15:00:40.833Z"
+    },
     {
       "id": "mq9eaxha",
       "symbol": "SOL/USD",
@@ -983,8 +996,8 @@
     }
   ],
   "cooldowns": {
-    "SOL/USD": 1781176171006
+    "SOL/USD": 1781190040837
   },
-  "lastRun": "2026-06-11T11:09:31.002Z",
+  "lastRun": "2026-06-11T15:00:40.833Z",
   "haltReason": null
 }
