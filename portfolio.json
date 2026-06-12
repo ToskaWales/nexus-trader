@@ -1,5 +1,5 @@
 {
-  "cash": 70289.31,
+  "cash": 69821.29,
   "positions": [
     {
       "symbol": "NVDA",
@@ -11,14 +11,27 @@
     },
     {
       "symbol": "SOL/USD",
-      "qty": 450,
-      "avgEntry": 64.53122222222224,
+      "qty": 457,
+      "avgEntry": 64.56689277899345,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1780690781715
     }
   ],
   "orders": [
+    {
+      "id": "mqa67r7a",
+      "symbol": "SOL/USD",
+      "side": "buy",
+      "qty": "7",
+      "filled_avg_price": "66.86",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI at 27 signals oversold conditions with strong 66% consensus buy signal, making this a favorable mean-reversion entry at $66.86 within the $500 limit.",
+      "created_at": "2026-06-12T00:10:52.146Z"
+    },
     {
       "id": "mqa34a67",
       "symbol": "SOL/USD",
@@ -1035,8 +1048,8 @@
     }
   ],
   "cooldowns": {
-    "SOL/USD": 1781217851263
+    "SOL/USD": 1781223052150
   },
-  "lastRun": "2026-06-11T22:44:11.260Z",
+  "lastRun": "2026-06-12T00:10:52.146Z",
   "haltReason": null
 }
