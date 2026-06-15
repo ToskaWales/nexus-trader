@@ -1,5 +1,5 @@
 {
-  "cash": 105296.18749999999,
+  "cash": 104833.23549999998,
   "positions": [
     {
       "symbol": "NVDA",
@@ -11,14 +11,27 @@
     },
     {
       "symbol": "BTC/USD",
-      "qty": 0.0075,
-      "avgEntry": 66507,
+      "qty": 0.014499999999999999,
+      "avgEntry": 66327.89655172414,
       "tier": "medium",
       "instrumentType": "Cryptocurrency",
       "openedAt": 1781554710026
     }
   ],
   "orders": [
+    {
+      "id": "mqfsfkox",
+      "symbol": "BTC/USD",
+      "side": "buy",
+      "qty": "0.007",
+      "filled_avg_price": "66136.00",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "RSI at 36 indicates oversold conditions with 65% bullish consensus, offering a favorable risk/reward entry point within the $500 position limit.",
+      "created_at": "2026-06-15T22:31:39.388Z"
+    },
     {
       "id": "mqfnoc22",
       "symbol": "BTC/USD",
@@ -1516,8 +1529,8 @@
     }
   ],
   "cooldowns": {
-    "BTC/USD": 1781554710026
+    "BTC/USD": 1781562699393
   },
-  "lastRun": "2026-06-15T20:18:30.022Z",
+  "lastRun": "2026-06-15T22:31:39.388Z",
   "haltReason": null
 }
