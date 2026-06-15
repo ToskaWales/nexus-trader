@@ -1,24 +1,42 @@
 {
-  "cash": 54151.179999999986,
+  "cash": 105794.98999999999,
   "positions": [
     {
       "symbol": "NVDA",
-      "qty": 2,
-      "avgEntry": 206.5,
+      "qty": 4,
+      "avgEntry": 209.23000000000002,
       "tier": "medium",
       "instrumentType": "Equity",
       "openedAt": 1780683495541
-    },
-    {
-      "symbol": "SOL/USD",
-      "qty": 687,
-      "avgEntry": 65.76008733624454,
-      "tier": "medium",
-      "instrumentType": "Cryptocurrency",
-      "openedAt": 1780690781715
     }
   ],
   "orders": [
+    {
+      "id": "mqfg4jdc",
+      "symbol": "NVDA",
+      "side": "buy",
+      "qty": "2",
+      "filled_avg_price": "211.96",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "NVDA has the highest consensus at 70% among candidates, price at $211.96 keeps 2 shares within the $500 limit, and AI/semiconductor demand remains a strong fundamental catalyst.",
+      "created_at": "2026-06-15T16:47:09.067Z"
+    },
+    {
+      "id": "mqfg4jdc",
+      "symbol": "SOL/USD",
+      "side": "sell",
+      "qty": "687",
+      "filled_avg_price": "75.79",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "reason": "take_profit",
+      "pnl": "6890.55",
+      "created_at": "2026-06-15T16:47:09.067Z"
+    },
     {
       "id": "mqf52u21",
       "symbol": "SOL/USD",
@@ -1477,8 +1495,8 @@
     }
   ],
   "cooldowns": {
-    "SOL/USD": 1781523473833
+    "NVDA": 1781542029072
   },
-  "lastRun": "2026-06-15T11:37:53.829Z",
+  "lastRun": "2026-06-15T16:47:09.067Z",
   "haltReason": null
 }
