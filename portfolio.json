@@ -1,5 +1,5 @@
 {
-  "cash": 105794.98999999999,
+  "cash": 105296.18749999999,
   "positions": [
     {
       "symbol": "NVDA",
@@ -8,9 +8,30 @@
       "tier": "medium",
       "instrumentType": "Equity",
       "openedAt": 1780683495541
+    },
+    {
+      "symbol": "BTC/USD",
+      "qty": 0.0075,
+      "avgEntry": 66507,
+      "tier": "medium",
+      "instrumentType": "Cryptocurrency",
+      "openedAt": 1781554710026
     }
   ],
   "orders": [
+    {
+      "id": "mqfnoc22",
+      "symbol": "BTC/USD",
+      "side": "buy",
+      "qty": "0.0075",
+      "filled_avg_price": "66507.00",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "65% consensus with RSI at 38 indicating oversold conditions provides a reasonable long entry with modest position size well within $500 limit.",
+      "created_at": "2026-06-15T20:18:30.022Z"
+    },
     {
       "id": "mqfg4jdc",
       "symbol": "NVDA",
@@ -1495,8 +1516,8 @@
     }
   ],
   "cooldowns": {
-    "NVDA": 1781542029072
+    "BTC/USD": 1781554710026
   },
-  "lastRun": "2026-06-15T16:47:09.067Z",
+  "lastRun": "2026-06-15T20:18:30.022Z",
   "haltReason": null
 }
