@@ -1,16 +1,29 @@
 {
-  "cash": 100699.72249999996,
+  "cash": 100295.08249999996,
   "positions": [
     {
       "symbol": "NVDA",
-      "qty": 28,
-      "avgEntry": 208.9635714285714,
+      "qty": 30,
+      "avgEntry": 208.52066666666667,
       "tier": "medium",
       "instrumentType": "Equity",
       "openedAt": 1780683495541
     }
   ],
   "orders": [
+    {
+      "id": "mqqvkfqw",
+      "symbol": "NVDA",
+      "side": "buy",
+      "qty": "2",
+      "filled_avg_price": "202.32",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "tier": "medium",
+      "reasoning": "NVDA has the highest consensus at 70% among candidates, and at $202.32 per share, 2 shares fits within the $500 limit while capturing AI/semiconductor momentum.",
+      "created_at": "2026-06-23T16:44:53.044Z"
+    },
     {
       "id": "mqpmsszy",
       "symbol": "NVDA",
@@ -1702,7 +1715,9 @@
       "created_at": "2026-06-04T07:36:25.832Z"
     }
   ],
-  "cooldowns": {},
-  "lastRun": "2026-06-23T14:12:19.292Z",
+  "cooldowns": {
+    "NVDA": 1782233093048
+  },
+  "lastRun": "2026-06-23T16:44:53.044Z",
   "haltReason": null
 }
