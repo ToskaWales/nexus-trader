@@ -1,5 +1,5 @@
 {
-  "cash": 105319.65049999996,
+  "cash": 105785.45049999996,
   "positions": [
     {
       "symbol": "NVDA",
@@ -8,17 +8,22 @@
       "tier": "medium",
       "instrumentType": "Equity",
       "openedAt": 1782324889513
-    },
-    {
-      "symbol": "BTC/USD",
-      "qty": 0.008,
-      "avgEntry": 60779,
-      "tier": "medium",
-      "instrumentType": "Cryptocurrency",
-      "openedAt": 1782362319059
     }
   ],
   "orders": [
+    {
+      "id": "mr0va3l3",
+      "symbol": "BTC/USD",
+      "side": "sell",
+      "qty": "0.008",
+      "filled_avg_price": "58225.00",
+      "limit_price": null,
+      "type": "market",
+      "status": "filled",
+      "reason": "stop_loss",
+      "pnl": "-20.43",
+      "created_at": "2026-06-30T16:34:32.483Z"
+    },
     {
       "id": "mqt0i76b",
       "symbol": "BTC/USD",
@@ -1802,6 +1807,6 @@
     }
   ],
   "cooldowns": {},
-  "lastRun": "2026-06-30T14:06:25.173Z",
+  "lastRun": "2026-06-30T16:34:32.483Z",
   "haltReason": null
 }
